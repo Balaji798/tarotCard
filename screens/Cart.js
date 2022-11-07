@@ -1,0 +1,216 @@
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  StatusBar,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
+import { categoricData } from "../data/categoricData";
+import { useNavigation } from "@react-navigation/native";
+import { imageData } from "../data/categoricData";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
+import React, { useState } from "react";
+
+const stories = [
+  {
+    name: "Perfume",
+    img: "https://img.loccitane.com/ocms/img/lib/_2013_StaticContent/OCC_4678627ae1a64e8ea33a3b6702fbeb4f.jpg",
+    price: "500",
+  },
+  {
+    name: "Statue",
+    img: "https://m.media-amazon.com/images/I/71f6-arA5TL._SY450_.jpg",
+    price: "800",
+  },
+  {
+    name: "Jewelry",
+    img: "https://cdn.shopify.com/s/files/1/0558/3509/9288/files/Mobile_banner_498fc643-ae05-444b-a453-caf3c6750360_1600x.jpg?v=1657979725",
+    price: "250",
+  },
+  {
+    name: "Gem Stone",
+    img: "https://3.bp.blogspot.com/-y0TXbvMVDoI/WoWTPQCckLI/AAAAAAAAO3I/7QeY_hRxGXYstB90jpqD4Q3qWgsNGt8KACLcBGAs/s1600/How%2Bto%2BDifferentiate%2BBetween%2BNatural%2BAnd%2BSynthetic%2BGemstones%2B%25281%2529.jpg",
+    price: "100",
+  },
+  {
+    name: "Tammy Morgan",
+    img: "https://randomuser.me/api/portraits/women/18.jpg",
+    price: "400",
+  },
+  {
+    name: "Perry Martin",
+    img: "https://randomuser.me/api/portraits/men/68.jpg",
+    price: "300",
+  },
+  {
+    name: "Violet Adams",
+    img: "https://randomuser.me/api/portraits/women/35.jpg",
+    price: "700",
+  },
+  {
+    name: "Joann Shelton",
+    img: "https://randomuser.me/api/portraits/women/64.jpg",
+    price: "300",
+  },
+];
+
+const Cart = () => {
+  const navigation = useNavigation();
+  const [bgColor, setBgColor] = useState(false);
+
+  const setBGColor = () => {
+    setBgColor(true);
+  };
+  return (
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#d9d9d9" />
+      <View
+        style={{
+          paddingVertical: 10,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <MaterialIcons
+          name={"arrow-back-ios"}
+          size={25}
+          onPress={() => navigation.navigate("ShopScreens")}
+        />
+      </View>
+      <Text style={{ paddingTop: 10, fontWeight: "bold", fontSize: 28 }}>
+        Shopping Cart
+      </Text>
+      <Text
+        style={{
+          width: "100%",
+          borderBottomWidth: 1,
+          marginVertical: 5,
+          paddingVertical: 10,
+        }}
+      >
+        2 items
+      </Text>
+      <View style={styles.storyView}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {stories.map((user, i) => (
+            <View
+              style={styles.storyHolder}
+              onPress={() => navigation.navigate("product-details")}
+            >
+              <Image
+                style={[styles.storyUserImage2]}
+                source={{
+                  uri: user.img,
+                }}
+              />
+              <View style={{ justifyContent: "space-between", padding: 10 }}>
+                <Text
+                  style={{
+                    width: "100%",
+                    paddingVertical: 5,
+                    fontWeight: "bold",
+                    fontSize: 20,
+                  }}
+                >
+                  {user.name}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    width: "100%",
+                    height: 100,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text
+                    style={{
+                      width: "100%",
+                      fontWeight: "bold",
+                      fontSize: 20,
+                    }}
+                  >
+                    {"$"}
+                    {user.price}
+                  </Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      backgroundColor: "#d9d9d9",
+                      height: 50,
+                      width: 100,
+                    }}
+                  >
+                    <AntDesign name={"plus"} size={25} />
+                    <Text>{i}</Text>
+                    <AntDesign name={"plus"} size={25} />
+                  </View>
+                </View>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      </View>
+      <View
+        style={{
+          width: "100%",
+          borderTopWidth: 1,
+          marginVertical: 10,
+          paddingVertical: 5,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text style={{ fontSize: 16, fontWeight: "500" }}>Sub Total</Text>
+        <Text style={{ fontWeight: "600", fontSize: 16 }}>{"$"} 2000.00</Text>
+      </View>
+      <TouchableOpacity
+        style={{
+          backgroundColor: "black",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingVertical: 15,
+          borderRadius:10
+        }}
+      >
+        <Text style={{ color: "#fff",fontSize:16,fontWeight:"600" }}>Place Order</Text>
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
+export default Cart;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#d9d9d9",
+    paddingHorizontal: 15,
+  },
+  storyView: {
+    marginTop: 4,
+    height: 430,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  storyHolder: {
+    width: "100%",
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  storyUserImage2: {
+    height: 200,
+    width: "40%",
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
+    resizeMode: "cover",
+  },
+});
