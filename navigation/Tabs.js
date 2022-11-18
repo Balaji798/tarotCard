@@ -16,14 +16,29 @@ const Tab = createBottomTabNavigator();
 const Tabs = () => {
   return (
     <Tab.Navigator
-      screenOptions={{ headerShown: false,style:{
-         position:"absolute",
-         bottom:100,
-      },
-      tabBarActiveTintColor:"black",
-      tabBarInactiveTintColor:"#d9d9d9",
-      tabBarStyle:styles.tabBarStyle
-    }}
+      screenOptions={{
+        headerShown: false,
+        // style: {
+        //   position: "absolute",
+        //   bottom: 100,
+        // },
+        "tabBarActiveTintColor": "black",
+        "tabBarInactiveTintColor": "#d9d9d9",
+        "tabBarStyle": [
+          {
+            "display":"flex",
+            position: "absolute",
+            backgroundColor: "#fff",
+            borderTopWidth: 0,
+            bottom: 28,
+            left: 16,
+            right: 16,
+            borderRadius: 15,
+            height: 68,
+          },
+          null,
+        ],
+      }}
       tabBarOptions={{
         showLabel: false,
       }}
@@ -33,7 +48,7 @@ const Tabs = () => {
         component={Home}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <SimpleLineIcons name="home" color={color} size={18} />
+            <SimpleLineIcons name="home" color={color} size={20} />
           ),
         }}
       />
@@ -43,7 +58,7 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             // <Icon name="calendar" color={color} size={size}/>
-            <Octicons name={"calendar"} color={color} size={18} />
+            <Octicons name={"calendar"} color={color} size={20} />
           ),
         }}
       />
@@ -53,7 +68,7 @@ const Tabs = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             // <Icon name="calendar" color={color} size={size}/>
-            <AntDesign name={"shoppingcart"} color={color} size={20} />
+            <AntDesign name={"shoppingcart"} color={color} size={22} />
           ),
         }}
       />
@@ -62,7 +77,7 @@ const Tabs = () => {
         component={GalleryScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="video-collection" color={color} size={20} />
+            <MaterialIcons name="video-collection" color={color} size={22} />
           ),
         }}
       />
@@ -71,7 +86,7 @@ const Tabs = () => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="person-circle-outline" color={color} size={23} />
+            <Ionicons name="person-circle-outline" color={color} size={22} />
           ),
         }}
       />
@@ -82,14 +97,15 @@ const Tabs = () => {
 export default Tabs;
 
 const styles = StyleSheet.create({
-   tabBarStyle:{
-      position:'absolute',
-      backgroundColor:"#fff",
-      borderTopWidth:0,
-      bottom:10,
-      left:10,
-      right:10,
-      borderRadius:15,
-      height:60
-   }
-})
+  tabBarStyle: {
+    position: "absolute",
+    backgroundColor: "#fff",
+    borderTopWidth: 0,
+    bottom: 10,
+    left: 10,
+    right: 10,
+    borderRadius: 15,
+    height: 60,
+  },
+  
+});

@@ -12,12 +12,16 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#1e1621" />
+    <PageWrapperView
+      topSafeArea
+      style={{ flex: 1, paddingHorizontal: 26 }}
+      statusBar={{ background: "#1e1621" }}
+    >
       <View style={{ height: "40%" }}>
         <View style={styles.bigCircle}></View>
         <View
@@ -30,13 +34,21 @@ const ProfileScreen = () => {
             paddingBottom: 25,
           }}
         >
-          <Text style={{ fontSize: 28, color: "#fff" }}>Profile</Text>
+          <Text style={{ fontSize: 28, color: "#fff", fontWeight: "600" }}>
+            Profile
+          </Text>
           <View
             style={{
               flexDirection: "row",
               alignItems: "center",
-              width: 45,
+
               justifyContent: "space-between",
+              marginRight: 15,
+              borderWidth: 0.5,
+              borderColor: "#322b35",
+              borderRadius: 5,
+              paddingHorizontal: 7,
+              paddingVertical: 2,
             }}
           >
             <MaterialIcons name="edit" color={"#fff"} size={16} />
@@ -94,7 +106,7 @@ const ProfileScreen = () => {
           </View>
         </View>
       </View>
-      <View style={{paddingTop:10}}>
+      <View>
         <ScrollView>
           <Text style={{ color: "grey" }}>Tarot App</Text>
           <View
@@ -211,7 +223,7 @@ const ProfileScreen = () => {
           </View>
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
@@ -220,7 +232,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    backgroundColor: "#ecf0f1",
     paddingHorizontal: 15,
   },
   bigCircle: {
@@ -229,7 +241,7 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width * 1.6,
     height: Dimensions.get("window").width * 1.68,
     borderRadius: 1000,
-    top: -330,
+    top: Dimensions.get("window").width * -0.93,
     left: Dimensions.get("window").width * -0.61,
   },
 });

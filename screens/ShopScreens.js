@@ -15,6 +15,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState } from "react";
 import Carousel from "../components/Carousel";
+import PageWrapperView from "../components/PageWrapperView";
 
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 30;
@@ -37,20 +38,8 @@ const stories = [
     img: "https://3.bp.blogspot.com/-y0TXbvMVDoI/WoWTPQCckLI/AAAAAAAAO3I/7QeY_hRxGXYstB90jpqD4Q3qWgsNGt8KACLcBGAs/s1600/How%2Bto%2BDifferentiate%2BBetween%2BNatural%2BAnd%2BSynthetic%2BGemstones%2B%25281%2529.jpg",
   },
   {
-    name: "Tammy Morgan",
-    img: "https://randomuser.me/api/portraits/women/18.jpg",
-  },
-  {
-    name: "Perry Martin",
-    img: "https://randomuser.me/api/portraits/men/68.jpg",
-  },
-  {
-    name: "Violet Adams",
-    img: "https://randomuser.me/api/portraits/women/35.jpg",
-  },
-  {
-    name: "Joann Shelton",
-    img: "https://randomuser.me/api/portraits/women/64.jpg",
+    name: "God Statue",
+    img: "https://rukminim1.flixcart.com/image/832/832/kmns7m80/showpiece-figurine/f/l/8/tfg-7539-shilpacharya-handicrafts-original-imagfgh6qguppxpw.jpeg?q=70",
   },
 ];
 
@@ -58,6 +47,8 @@ const WIDTH = Dimensions.get("window").width * 0.9;
 const HEIGHT = Dimensions.get("window").height;
 
 const ShopScreens = () => {
+  const [wish, setWish] = useState(false);
+  const [ind, setInd] = useState([]);
   const navigation = useNavigation();
   const [pagination, setPagination] = useState(0);
 
@@ -65,20 +56,31 @@ const ShopScreens = () => {
     const slide = Math.ceil(
       nativeEvent.contentOffset.x / nativeEvent.layoutMeasurement.width
     );
-    if(slide !== pagination){
-      setPagination(slide)
+    if (slide !== pagination) {
+      setPagination(slide);
     }
   };
+
+  const setWishI = (i) => {
+    setInd(i);
+    setWish((p) => !p);
+    console.log(ind[i]);
+  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{ paddingHorizontal: 16, paddingBottom: 50 }}
+      statusBar={{ background: "#d9d9d9" }}
+    >
       <View
         style={{
           width: "100%",
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
-          paddingHorizontal: 10,
+          paddingVertical: 10,
         }}
       >
         <Text style={{ fontWeight: "bold", fontSize: 28 }}>Shop Our</Text>
@@ -89,33 +91,41 @@ const ShopScreens = () => {
             width: "35%",
           }}
         >
-          <AntDesign name={"search1"} size={28} 
-          onPress={() => navigation.navigate("product-search")}/>
-          <Ionicons name={"ios-heart-outline"} size={28} 
-          onPress={()=>navigation.navigate("wish-list")}
+          <AntDesign
+            name={"search1"}
+            size={28}
+            onPress={() => navigation.navigate("product-search")}
           />
-          <MaterialIcons name={"shopping-cart"} size={28} 
-          onPress={()=>navigation.navigate("cart")}
+          <Ionicons
+            name={"ios-heart-outline"}
+            size={28}
+            onPress={() => navigation.navigate("wish-list")}
+          />
+          <MaterialIcons
+            name={"shopping-cart"}
+            size={28}
+            onPress={() => navigation.navigate("cart")}
           />
         </View>
       </View>
-      <ScrollView>
-        {/* <Carousel data={imageData} /> */}
-        <View>
+      <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false} style={{borderRadius: 10,}}>
+        {/* <Carousel data={stories} /> */}
+        <View style={{borderRadius: 10,}}>
           <ScrollView
             horizontal
             pagingEnabled
             onScroll={chang}
             showsHorizontalScrollIndicator={false}
-            style={{ width, height: 250 }}
+            style={{ width, height: 250,borderRadius: 10, }}
+            scrollEventThrottle={17}
           >
             {stories.map((image, index) => (
-              <View style={{ paddingHorizontal: 10, width }}>
+              <View style={{ width,borderRadius: 10,  }} key={index}>
                 <Image
                   key={index}
                   source={{ uri: image.img }}
                   style={{
-                    width: "100%",
+                    width,
                     height: 250,
                     resizeMode: "cover",
                     borderRadius: 10,
@@ -136,18 +146,19 @@ const ShopScreens = () => {
             <View
               style={{
                 flexDirection: "row",
-                width: 150,
+                width: 100,
                 justifyContent: "space-between",
               }}
             >
               {stories.map((i, k) => (
-                <Text
+                <View
                   style={{
-                    width: pagination === k ? 25 : 10,
-                    height: 10,
-                    borderRadius: 15,
+                    width: pagination === k ? 24 : 6,
+                    height: pagination === k ? 6 : 6,
+                    borderRadius: 3,
                     backgroundColor: "#fff",
                   }}
+                  key={k}
                 />
               ))}
             </View>
@@ -158,14 +169,16 @@ const ShopScreens = () => {
             styles.storyView,
             {
               paddingVertical: 10,
+             
             },
           ]}
         >
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {stories.map((user) => (
+            {stories.map((user, i) => (
               <TouchableOpacity
                 style={styles.storyHolder}
                 onPress={() => navigation.navigate("products")}
+                key={i}
               >
                 <Image
                   style={[styles.storyUserImage]}
@@ -179,13 +192,23 @@ const ShopScreens = () => {
           </ScrollView>
         </View>
 
-        <Text style={{ padding: 15, fontWeight: "bold", fontSize: 18 }}>
+        <Text
+          style={{ paddingHorizontal: 15, fontWeight: "bold", fontSize: 18 }}
+        >
           New Arrival
         </Text>
-        <View style={styles.storyView}>
+        <View
+          style={[
+            styles.storyView,
+            {
+              marginBottom: 50,
+             
+            },
+          ]}
+        >
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {stories.map((user) => (
-              <View style={styles.storyHolder}>
+            {stories.map((user, index) => (
+              <View style={styles.storyHolder} key={index}>
                 <View
                   style={{
                     position: "absolute",
@@ -202,7 +225,20 @@ const ShopScreens = () => {
                     borderRadius: 30,
                   }}
                 >
-                  <AntDesign name={"heart"} size={20} color={"red"} />
+                  {ind[index] === index ? (
+                    <AntDesign
+                      name={"heart"}
+                      size={20}
+                      color={"red"}
+                      onPress={() => setWishI(index)}
+                    />
+                  ) : (
+                    <Ionicons
+                      name={"ios-heart-outline"}
+                      size={24}
+                      onPress={() => setWishI(index)}
+                    />
+                  )}
                 </View>
                 <Image
                   style={[styles.storyUserImage2]}
@@ -215,7 +251,7 @@ const ShopScreens = () => {
           </ScrollView>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
@@ -245,8 +281,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   storyUserImage: {
-    height: 80,
-    width: 80,
+    height: 64,
+    width: 64,
     borderRadius: 100,
   },
   storyUserImage2: {

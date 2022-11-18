@@ -9,14 +9,92 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
-import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import React, { useState, useEffect } from "react";
+import { setStatusBarStyle } from "expo-status-bar";
+
+
+
+
+import Constants from "expo-constants";
+import ApiService from "../services/api/ApiService";
+// import useConditionWrapper from "../hooks/useConditionWrapper";
+import useApi from "../hooks/useApi";
+import PageWrapperView from "../components/PageWrapperView";
+
+//const inProduction = manifest.packagerOpts == null;
+// const inProduction = process.env.NODE_ENV === 'production';
+// const inExpo = Constants.manifest && Constants.manifest.debuggerHost;
+// const inBrowser = typeof document !== 'undefined';
+// export const apiDomain =
+//   inProduction ? 'mywebsite.com': inExpo ? Constants.manifest.debuggerHost.split(`:`).shift()
+//   : inBrowser ? document.location.hostname
+//   : 'unknown';
+
+// console.log('apiDomain:', apiDomain);
 
 const Home = () => {
+
+  const [error, setError] = useState("");
+  const [bg, setBg] = useState(false);
+  const [bgIndex, setBgIndex] = useState(-1);
+  const stories = [
+    {
+      name: "Todays",
+      date: "sep 27",
+    },
+    {
+      name: "Weekly",
+      date: "sep 27 - oct 1",
+    },
+    {
+      name: "Monthly",
+      date: "Sep - Oct",
+    },
+    {
+      name: "Yearly",
+      date: "Jan - Dec",
+    },
+  ];
+
   const navigation = useNavigation();
+
+  const bgFun = (i) => {
+    setBg(true);
+    setBgIndex(i);
+    setTimeout(() => {
+      navigation.navigate("tarot-cadres");
+      setBgIndex(-1);
+    }, 200);
+  };
+
+	// const apiWrapper = useConditionWrapper();
+
+	// const {
+	// 	firstLoad,
+	// 	loading,
+	// 	data: products,
+	// 	reload,
+	// } = useApi(
+	// 	async () =>
+	// 		apiWrapper(async () => {
+	// 			const res = await ApiService.getProduct();
+	// 			const products = res.data
+	// 			return products;
+	// 		}), [],
+	// );
+
+	// onfocus reload
+	// const isFocused = useIsFocused();
+	// useEffect(() => {
+	// 	reload();
+	// }, [isFocused]);
+
+
+
+//  console.log(products)
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="light-content" backgroundColor="#1e1621" />
+    <PageWrapperView topSafeArea  style={{ flex: 1 }} statusBar={{ background: '#1e1621' }}>
       <ScrollView style={{ width: "100%", backgroundColor: "transparent" }}>
         <View style={styles.topView}>
           <View
@@ -27,13 +105,12 @@ const Home = () => {
               alignItems: "center",
             }}
           >
-            <View style={{ paddingLeft: 20 }}>
+            <View>
               <Text
                 style={{
                   color: "#fff",
                   fontWeight: "bold",
                   fontSize: 28,
-                  paddingTop: 50,
                 }}
               >
                 Morning,
@@ -74,9 +151,6 @@ const Home = () => {
               backgroundColor: "#d5d5d5",
               borderRadius: 10,
               padding: 10,
-
-              marginLeft: 10,
-              marginRight: 10,
               justifyContent: "space-between",
             }}
           >
@@ -109,78 +183,77 @@ const Home = () => {
           style={{
             width: "100%",
             padding: 20,
-            paddingLeft: 10,
-            paddingRight: 10,
+            
+            paddingBottom:100
           }}
         >
           <Text style={{ fontWeight: "bold", fontSize: 25 }}>
             Check your horoscope
           </Text>
           <View
-            style={{
-              width: "100%",
-              paddingTop: 20,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-            }}
+            style={[
+              styles.storyView,
+              {
+                paddingVertical: 10,
+                
+                
+              },
+            ]}
           >
-            <View
-              style={{
-                height: 90,
-                width: 105,
-                borderWidth: 1.5,
-                borderColor: "#1e1621",
-                borderRadius: 12,
-                paddingLeft: 10,
-                justifyContent: "space-around",
-                borderColor: "#1109",
-              }}
+            <ScrollView
+              horizontal={true}
+              showsHorizontalScrollIndicator={false}
+              style={{width:"100%"}}
             >
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Tomorrow</Text>
-              <Text style={{}}>Sept 27</Text>
-              <FontAwesome5 name={"long-arrow-alt-right"} size={25} />
-            </View>
-            <TouchableOpacity
-              style={{
-                height: 90,
-                width: 105,
-                borderRadius: 10,
-                paddingLeft: 10,
-                justifyContent: "space-around",
-                backgroundColor: "#1e1621",
-              }}
-              onPress={() => navigation.navigate("tarot-cadres")}
-            >
-              <Text style={{ fontWeight: "bold", fontSize: 16, color: "#fff" }}>
-                Weekly
-              </Text>
-              <Text style={{ color: "#fff" }}>Sept 27 -Oct 1</Text>
-              <FontAwesome5
-                name={"long-arrow-alt-right"}
-                size={25}
-                color={"#fff"}
-              />
-            </TouchableOpacity>
-            <View
-              style={{
-                height: 90,
-                width: 105,
-                borderWidth: 1.5,
-                borderRadius: 10,
-                paddingLeft: 10,
-                justifyContent: "space-around",
-                borderColor: "#1109",
-              }}
-            >
-              <Text style={{ fontWeight: "bold", fontSize: 16 }}>Monthly</Text>
-              <Text style={{}}>Sept - Oct</Text>
-              <FontAwesome5 name={"long-arrow-alt-right"} size={25} />
-            </View>
+              {stories.map((user, i) => (
+                <TouchableOpacity
+                  style={{
+                    
+                    width: 123,
+                    borderWidth: 1.5,
+                    borderRadius: 10,
+                    paddingLeft: 10,
+                    borderColor: bg && bgIndex == i ? "black" : "#1109",
+                    backgroundColor: bg && bgIndex == i ? "black" : "#fff",
+                    marginRight: 10,
+                    paddingVertical:14
+                  }}
+                  onPress={() => bgFun(i)}
+                  key={i}
+                >
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      fontSize: 16,
+                      color: bg && bgIndex == i ? "#fff" : "black",
+                      lineHeight:16,
+                    }}
+                  >
+                    {user.name}
+                  </Text>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      color: bg && bgIndex == i ? "#fff" : "black",
+                      lineHeight:14,
+                      marginTop:12
+                    }}
+                  >
+                    {user.date}
+                  </Text>
+                  <FontAwesome5
+                    name={"long-arrow-alt-right"}
+                    size={25}
+                    color={bg && bgIndex == i ? "#fff" : "black"}
+                    style={{marginTop:8}}
+                  />
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
@@ -202,5 +275,15 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
     paddingBottom: 30,
+    paddingHorizontal:16
+  },
+  storyView: {
+    width: 500,
+    paddingVertical: 4,
+    marginTop: 4,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
 });

@@ -1,21 +1,40 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  StatusBar,
+  ScrollView,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import Octicons from "react-native-vector-icons/Octicons";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const AppFeedback = () => {
   const red = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
-      <View>
-        <Octicons
-          name="arrow-left"
-          size={25}
-          onPress={() => navigation.navigate("Profile")}
-        />
-        <Text style={{ fontWeight: "bold", fontSize: 23,paddingTop:5 }}>App Feedback</Text>
-      </View>
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{
+        flex: 1,
+        paddingHorizontal: 15,
+        justifyContent: "space-between",
+      }}
+      statusBar={{ background: "#d9d9d9" }}
+    >
+      <StatusBar barStyle="dark-content" backgroundColor="transparent" />
+      <Octicons
+        name="arrow-left"
+        size={25}
+        onPress={() => navigation.navigate("Profile")}
+      />
+
+      <Text style={{ fontWeight: "bold", fontSize: 23, paddingTop: 5 }}>
+        App Feedback
+      </Text>
       <View
         style={{
           width: "100%",
@@ -116,7 +135,7 @@ const AppFeedback = () => {
                     : item >= 7 && item <= 8
                     ? "#f6be00"
                     : "#008000",
-                width:"10%",
+                width: "10%",
                 borderRightWidth: 1,
                 borderRightColor: "#fff",
                 height: 35,
@@ -265,7 +284,7 @@ const AppFeedback = () => {
           Submit
         </Text>
       </View>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
@@ -274,10 +293,9 @@ export default AppFeedback;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
-    paddingTop: 40,
+    backgroundColor: "#ecf0f1",
+    paddingVertical: 25,
     paddingHorizontal: 15,
     justifyContent: "space-between",
-    paddingBottom:20
   },
 });

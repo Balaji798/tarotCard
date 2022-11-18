@@ -2,11 +2,12 @@ import { StyleSheet, Text, View, SafeAreaView, ScrollView } from "react-native";
 import Octicons from "react-native-vector-icons/Octicons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const AboutApp = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
       <Octicons
         name="arrow-left"
         size={25}
@@ -50,7 +51,7 @@ const AboutApp = () => {
           NESTO footprint is soon expected to expand into other markets in Asia
         </Text>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 

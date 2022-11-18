@@ -12,11 +12,12 @@ import Fontisto from "react-native-vector-icons/Fontisto";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const ContactToApp = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
       <Octicons
         name="arrow-left"
         size={25}
@@ -172,18 +173,8 @@ const ContactToApp = () => {
           </Text>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
 export default ContactToApp;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    paddingTop: 30,
-    paddingHorizontal: 15,
-    justifyContent: "space-between",
-  },
-});

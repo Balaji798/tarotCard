@@ -9,12 +9,17 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 
 const ProductSearch = () => {
+  const [wish, setWish] = useState(false);
+  const [wish2, setWish2] = useState(false);
+  const [ind, setInd] = useState(-1);
+  const [newInd,setNewInd] = useState(-1)
   const navigation = useNavigation();
 
   const stories = [
@@ -35,29 +40,29 @@ const ProductSearch = () => {
       img: "https://3.bp.blogspot.com/-y0TXbvMVDoI/WoWTPQCckLI/AAAAAAAAO3I/7QeY_hRxGXYstB90jpqD4Q3qWgsNGt8KACLcBGAs/s1600/How%2Bto%2BDifferentiate%2BBetween%2BNatural%2BAnd%2BSynthetic%2BGemstones%2B%25281%2529.jpg",
     },
     {
-      name: "Tammy Morgan",
-      img: "https://randomuser.me/api/portraits/women/18.jpg",
-    },
-    {
-      name: "Perry Martin",
-      img: "https://randomuser.me/api/portraits/men/68.jpg",
-    },
-    {
-      name: "Violet Adams",
-      img: "https://randomuser.me/api/portraits/women/35.jpg",
-    },
-    {
-      name: "Joann Shelton",
-      img: "https://randomuser.me/api/portraits/women/64.jpg",
+      name: "God Statue",
+      img: "https://rukminim1.flixcart.com/image/832/832/kmns7m80/showpiece-figurine/f/l/8/tfg-7539-shilpacharya-handicrafts-original-imagfgh6qguppxpw.jpeg?q=70",
     },
   ];
+
+  const setWishI = (i) => {
+    setInd(i);
+    setWish((p) => !p);
+  };
+
+  const setWishj = (i)=>{
+    setNewInd(i);
+    setWish2((p) => !p);
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <View
         style={{
           flexDirection: "row",
           paddingHorizontal: 10,
-          paddingVertical: 10,
+          paddingVertical: 20,
         }}
       >
         <MaterialIcons
@@ -81,7 +86,7 @@ const ProductSearch = () => {
         ]}
       >
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {stories.map((user) => (
+          {stories.map((user, index) => (
             <TouchableOpacity
               style={styles.storyHolder}
               onPress={() => navigation.navigate("products")}
@@ -102,7 +107,7 @@ const ProductSearch = () => {
       </Text>
       <View style={styles.storyView}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {stories.map((user) => (
+          {stories.map((user, index) => (
             <View style={styles.storyHolder}>
               <View
                 style={{
@@ -120,7 +125,20 @@ const ProductSearch = () => {
                   borderRadius: 30,
                 }}
               >
-                <AntDesign name={"heart"} size={20} color={"red"} />
+                {wish && ind === index ? (
+                  <AntDesign
+                    name={"heart"}
+                    size={20}
+                    color={"red"}
+                    onPress={() => setWishI(index)}
+                  />
+                ) : (
+                  <Ionicons
+                    name={"ios-heart-outline"}
+                    size={24}
+                    onPress={() => setWishI(index)}
+                  />
+                )}
               </View>
               <Image
                 style={[styles.storyUserImage2]}
@@ -137,7 +155,7 @@ const ProductSearch = () => {
       </Text>
       <View style={styles.storyView}>
         <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-          {stories.map((user) => (
+          {stories.map((user,index) => (
             <View style={styles.storyHolder}>
               <View
                 style={{
@@ -155,7 +173,20 @@ const ProductSearch = () => {
                   borderRadius: 30,
                 }}
               >
-                <AntDesign name={"heart"} size={20} color={"red"} />
+                {wish2 && newInd === index ? (
+                  <AntDesign
+                    name={"heart"}
+                    size={20}
+                    color={"red"}
+                    onPress={() => setWishj(index)}
+                  />
+                ) : (
+                  <Ionicons
+                    name={"ios-heart-outline"}
+                    size={24}
+                    onPress={() => setWishj(index)}
+                  />
+                )}
               </View>
               <Image
                 style={[styles.storyUserImage2]}
@@ -167,7 +198,7 @@ const ProductSearch = () => {
           ))}
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

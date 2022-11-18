@@ -6,7 +6,7 @@ import React from "react";
 const WhatsNew = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Octicons
         name="arrow-left"
         size={25}
@@ -17,7 +17,7 @@ const WhatsNew = () => {
       <Text style={{color:"grey"}}>9.3.1</Text>
       <Text style={{paddingTop:15,lineHeight:25}}>We update the Tarot app as often as possible to make it faster, more reliable and secured for you.</Text>
 
-    </SafeAreaView>
+    </View>
   )
 }
 

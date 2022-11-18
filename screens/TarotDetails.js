@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StatusBar,
+  Platform
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
@@ -15,15 +16,18 @@ import React from "react";
 const TarotDetails = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor="#1e1621" />
+      
       <View style={styles.bigCircle}></View>
-      <MaterialIcons
-        name={"arrow-back-ios"}
-        size={25}
-        style={{ paddingVertical: 10, color: "#fff" }}
-        onPress={() => navigation.navigate("tarot-cadres")}
-      />
+      <View style={{ marginTop: 15 }}>
+        <MaterialIcons
+          name={"arrow-back-ios"}
+          size={25}
+          style={{ paddingBottom: 10, color: "#fff" }}
+          onPress={() => navigation.navigate("tarot-cadres")}
+        />
+      </View>
       <Text style={{ fontSize: 24, fontWeight: "bold", color: "#fff" }}>
         Tarot Card Name
       </Text>
@@ -41,7 +45,7 @@ const TarotDetails = () => {
             width: "40%",
             backgroundColor: "#d9d9d9",
             borderRadius: 10,
-            marginBottom:10
+            marginBottom: 10,
           }}
         ></View>
       </View>
@@ -84,7 +88,7 @@ const TarotDetails = () => {
           Integer aliquet urna id sapien laoreet molestie.{" "}
         </Text>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -103,9 +107,13 @@ const styles = StyleSheet.create({
     // width: Dimensions.get("window").width * 1.11,
     // height: 650,
     borderRadius: 1000,
-    top: -180,
-    left: Dimensions.get("window").width * -0.04,
-    width: Dimensions.get("window").width * 1.07,
-    height: Dimensions.get("window").width * 1.1,
+    top: Platform.OS === "ios" ? -184 :-220,
+    
+    // left: Dimensions.get("window").width * -0.04,
+    left: -31,
+    // width: Dimensions.get("window").width * 1.07,
+    // height: Dimensions.get("window").width * 1.1,
+    width: 475,
+    height: 453,
   },
 });

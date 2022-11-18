@@ -2,18 +2,31 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   Image,
   TextInput,
   TouchableOpacity,
+  Platform,
+  Keyboard,
+  KeyboardAvoidingView,
+  Dimensions,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import ApiService from "../services/api/ApiService";
+import useConditionWrapper from "../hooks/useConditionWrapper";
+import React, { useState } from "react";
 
 const Login = () => {
+  const [phone, setPhone] = useState("");
   const navigation = useNavigation();
+
+  const apiWrapper = useConditionWrapper();
+
+  const signup = ()=>{
+      
+  }
+
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <Image
         source={require("../assets/kali.png")}
         resizeMode="cover"
@@ -22,55 +35,57 @@ const Login = () => {
           height: 280,
         }}
       />
-      <View style={{justifyContent:"space-between"}}>
-        <Text style={{ fontWeight: "bold", fontSize: 20,paddingBottom:5 }}>
+      <View style={{ justifyContent: "space-between" }}>
+        <Text style={{ fontWeight: "bold", fontSize: 20, paddingBottom: 5 }}>
           Enter Your Phone Number
         </Text>
-        <Text style={{ fontSize: 16,paddingBottom:20 }}>
+        <Text style={{ fontSize: 16, paddingBottom: 20 }}>
           You will receive a 6 digit code for phone number verification
         </Text>
-      <View
-        style={{
-          backgroundColor: "#d9d9d9",
-          borderRadius: 10,
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-between",
-          paddingLeft: 10,
-          paddingTop: 5,
-          paddingBottom: 5,
-          width: "100%",
-        }}
-      >
         <View
           style={{
-            borderRightWidth: 1,
-            borderColor: "#555555",
-            paddingRight: 10,
+            backgroundColor: "#d9d9d9",
+            borderRadius: 10,
             display: "flex",
+            flexDirection: "row",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "space-between",
+            paddingLeft: 10,
             paddingTop: 5,
             paddingBottom: 5,
+            width: "100%",
+            height:52
           }}
         >
-          <Text
+          <View
             style={{
-              fontWeight: "bold",
-              fontSize: 16,
-              color:"#555555"
+              borderRightWidth: 1,
+              borderColor: "#555555",
+              paddingRight: 10,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              paddingTop: 5,
+              paddingBottom: 5,
+              height:30
             }}
           >
-            +91
-          </Text>
+            <Text
+              style={{
+                fontWeight: "bold",
+                fontSize: 16,
+                color: "#555555",
+              }}
+            >
+              +91
+            </Text>
+          </View>
+          <TextInput
+            placeholder="Phone Number"
+            style={{ flex: 1, paddingLeft: 5, fontSize: 16 }}
+            onChangeText={(newText) => setPhone(newText)}
+          />
         </View>
-        <TextInput
-          placeholder="Phone Number"
-          style={{ flex: 1, paddingLeft: 5, fontSize: 16 }}
-          onChangeText={() => {}}
-        />
-      </View>
       </View>
       <TouchableOpacity
         style={{
@@ -84,11 +99,19 @@ const Login = () => {
           paddingTop: 10,
           paddingBottom: 10,
         }}
-        onPress={() => navigation.navigate("Verification")}
+        onPress={() => {
+          navigation.navigate("Verification");
+        }}
+        // onPress={async () =>
+        //   apiWrapper(async () => {
+        //     console.log("hi");
+        //     await ApiService.sendLoginOTP(phone);
+        //     navigation.navigate("Verification");
+        //   })}
       >
         <Text style={{ color: "#fff", fontSize: 18 }}>Continue</Text>
       </TouchableOpacity>
-    </SafeAreaView>
+    </View>
   );
 };
 

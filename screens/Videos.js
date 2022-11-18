@@ -10,12 +10,13 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import React, { useState } from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const Videos = () => {
   const [tab, setTab] = useState(false);
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15 }} statusBar={{ background: '#d9d9d9' }}>
       <MaterialIcons
         name={"arrow-back-ios"}
         size={25}
@@ -37,7 +38,7 @@ const Videos = () => {
             paddingTop: 10,
           }}
         >
-          <View style={{ width: "100%",paddingBottom:10 }}>
+          <View style={{ width: "100%", paddingBottom: 10 }}>
             <View
               style={{
                 height: 180,
@@ -46,18 +47,29 @@ const Videos = () => {
                 borderRadius: 10,
               }}
             ></View>
-            <View style={{ width: "100%", justifyContent: "space-between",flexDirection:"row",paddingVertical:10 }}>
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                paddingVertical: 10,
+              }}
+            >
               <View>
-                <Text style={{fontWeight:"bold",fontSize:16}}>video Name</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  video Name
+                </Text>
                 <Text>112K views</Text>
               </View>
               <View>
-                <Text style={{fontWeight:"bold",fontSize:16}}>2 hr 30 mins</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  2 hr 30 mins
+                </Text>
                 <Text>3 weeks ago</Text>
               </View>
             </View>
           </View>
-          <View style={{ width: "100%",paddingBottom:10 }}>
+          <View style={{ width: "100%", paddingBottom: 10 }}>
             <View
               style={{
                 height: 180,
@@ -66,18 +78,29 @@ const Videos = () => {
                 borderRadius: 10,
               }}
             ></View>
-            <View style={{ width: "100%", justifyContent: "space-between",flexDirection:"row",paddingVertical:10 }}>
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                paddingVertical: 10,
+              }}
+            >
               <View>
-                <Text style={{fontWeight:"bold",fontSize:16}}>video Name</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  video Name
+                </Text>
                 <Text>112K views</Text>
               </View>
               <View>
-                <Text style={{fontWeight:"bold",fontSize:16}}>20 mins</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  20 mins
+                </Text>
                 <Text>3 weeks ago</Text>
               </View>
             </View>
           </View>
-          <View style={{ width: "100%",paddingBottom:10 }}>
+          <View style={{ width: "100%", paddingBottom: 10 }}>
             <View
               style={{
                 height: 180,
@@ -86,20 +109,31 @@ const Videos = () => {
                 borderRadius: 10,
               }}
             ></View>
-            <View style={{ width: "100%", justifyContent: "space-between",flexDirection:"row",paddingVertical:10 }}>
+            <View
+              style={{
+                width: "100%",
+                justifyContent: "space-between",
+                flexDirection: "row",
+                paddingVertical: 10,
+              }}
+            >
               <View>
-                <Text style={{fontWeight:"bold",fontSize:16}}>Video Name</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  Video Name
+                </Text>
                 <Text>112K views</Text>
               </View>
               <View>
-                <Text style={{fontWeight:"bold",fontSize:16}}>2 hr 30 mins</Text>
+                <Text style={{ fontWeight: "bold", fontSize: 16 }}>
+                  2 hr 30 mins
+                </Text>
                 <Text>3 weeks ago</Text>
               </View>
             </View>
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 

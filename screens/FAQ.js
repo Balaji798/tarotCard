@@ -5,11 +5,12 @@ import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Feather from "react-native-vector-icons/Feather";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const FAQ = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
       <Octicons
         name="arrow-left"
         size={25}
@@ -25,11 +26,10 @@ const FAQ = () => {
       <View
         style={{
           marginTop: 15,
-          marginBottom: 25,
+          marginBottom: 15,
           borderWidth: 1.3,
           borderColor: "#d3d3d3",
-          paddingVertical: 5,
-          paddingHorizontal: 10,
+          paddingHorizontal: 5,
           borderRadius: 10,
           flexDirection: "row",
         }}
@@ -153,7 +153,7 @@ const FAQ = () => {
         </Text>
         <Feather name={"plus"} size={25} color={"grey"} />
       </View>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 

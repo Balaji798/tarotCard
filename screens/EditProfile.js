@@ -10,11 +10,12 @@ import { useNavigation } from "@react-navigation/native";
 import Octicons from "react-native-vector-icons/Octicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const EditProfile = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
       <Octicons
         name="arrow-left"
         size={25}
@@ -24,6 +25,7 @@ const EditProfile = () => {
       <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
+        scrollEventThrottle={16}
       >
         <Text style={{ fontSize: 26, fontWeight: "bold" }}>
           Complete Your Profile
@@ -190,17 +192,8 @@ const EditProfile = () => {
           />
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
 export default EditProfile;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#ffffff",
-    paddingTop: 30,
-    paddingHorizontal: 15,
-  },
-});

@@ -9,27 +9,30 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const GalleryScreen = () => {
   const [tab, setTab] = useState(false);
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar animated={true} backgroundColor="#d9d9d9" />
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{ paddingBottom: 50 }}
+      statusBar={{ background: "#d9d9d9" }}
+    >
       <ScrollView
-        style={{ width: "100%", backgroundColor: "transparent" }}
+        style={{ width: "100%", backgroundColor: "transparent",paddingHorizontal: 16, }}
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
-        <Text style={{ fontSize: 28,fontWeight:"bold" }}>
-          Gallery
-        </Text>
+        <Text style={{ fontSize: 28, fontWeight: "bold" }}>Gallery</Text>
         <View
           style={{
             flexDirection: "row",
             justifyContent: "space-between",
             flexWrap: "wrap",
-            paddingTop:10
+            paddingTop: 10,
           }}
         >
           <View
@@ -45,7 +48,6 @@ const GalleryScreen = () => {
               width: "47%",
               marginTop: 20,
             }}
-            
           >
             <View
               style={{
@@ -114,7 +116,7 @@ const GalleryScreen = () => {
                 style={{
                   textAlign: "center",
                   fontSize: 12,
-                  color:"#fff"
+                  color: "#fff",
                 }}
               >
                 12 Videos
@@ -159,7 +161,7 @@ const GalleryScreen = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 

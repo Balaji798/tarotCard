@@ -16,6 +16,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState } from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const stories = [
   {
@@ -39,148 +40,157 @@ const stories = [
     price: "100",
   },
   {
-    name: "Tammy Morgan",
-    img: "https://randomuser.me/api/portraits/women/18.jpg",
-    price: "400",
-  },
-  {
-    name: "Perry Martin",
-    img: "https://randomuser.me/api/portraits/men/68.jpg",
-    price: "300",
-  },
-  {
-    name: "Violet Adams",
-    img: "https://randomuser.me/api/portraits/women/35.jpg",
-    price: "700",
-  },
-  {
-    name: "Joann Shelton",
-    img: "https://randomuser.me/api/portraits/women/64.jpg",
-    price: "300",
+    name: "God Statue",
+    img: "https://rukminim1.flixcart.com/image/832/832/kmns7m80/showpiece-figurine/f/l/8/tfg-7539-shilpacharya-handicrafts-original-imagfgh6qguppxpw.jpeg?q=70",
   },
 ];
 
 const Cart = () => {
   const navigation = useNavigation();
   const [bgColor, setBgColor] = useState(false);
+  const [quantity, setQuantity] = useState(0);
+
+  let i = 0;
+
+  const increment = () => {
+    i++;
+    if (quantity >= 0) setQuantity(i);
+  };
+
+  const decrement = () => {
+    i--;
+    if (quantity >= 0) setQuantity(i);
+  };
 
   const setBGColor = () => {
     setBgColor(true);
   };
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#d9d9d9" />
-      <View
-        style={{
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
+      <ScrollView 
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
       >
-        <MaterialIcons
-          name={"arrow-back-ios"}
-          size={25}
-          onPress={() => navigation.navigate("ShopScreens")}
-        />
-      </View>
-      <Text style={{ paddingTop: 10, fontWeight: "bold", fontSize: 28 }}>
-        Shopping Cart
-      </Text>
-      <Text
-        style={{
-          width: "100%",
-          borderBottomWidth: 1,
-          marginVertical: 5,
-          paddingVertical: 10,
-        }}
-      >
-        2 items
-      </Text>
-      <View style={styles.storyView}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {stories.map((user, i) => (
-            <View
-              style={styles.storyHolder}
-              onPress={() => navigation.navigate("product-details")}
-            >
-              <Image
-                style={[styles.storyUserImage2]}
-                source={{
-                  uri: user.img,
-                }}
-              />
-              <View style={{ justifyContent: "space-between", padding: 10 }}>
-                <Text
-                  style={{
-                    width: "100%",
-                    paddingVertical: 5,
-                    fontWeight: "bold",
-                    fontSize: 20,
+        <View
+          style={{
+            paddingVertical: 10,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <MaterialIcons
+            name={"arrow-back-ios"}
+            size={25}
+            onPress={() => navigation.navigate("ShopScreens")}
+          />
+        </View>
+        <Text style={{ paddingTop: 10, fontWeight: "bold", fontSize: 28 }}>
+          Shopping Cart
+        </Text>
+        <Text
+          style={{
+            width: "100%",
+            borderBottomWidth: 1,
+            marginVertical: 5,
+            paddingVertical: 10,
+          }}
+        >
+          2 items
+        </Text>
+        <View style={styles.storyView}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {stories.map((user, i) => (
+              <View
+                style={styles.storyHolder}
+                onPress={() => navigation.navigate("product-details")}
+              >
+                <Image
+                  style={[styles.storyUserImage2]}
+                  source={{
+                    uri: user.img,
                   }}
-                >
-                  {user.name}
-                </Text>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    width: "100%",
-                    height: 100,
-                    justifyContent: "space-between",
-                  }}
-                >
+                />
+                <View style={{ justifyContent: "space-between", padding: 10 }}>
                   <Text
                     style={{
                       width: "100%",
+                      paddingVertical: 5,
                       fontWeight: "bold",
                       fontSize: 20,
                     }}
                   >
-                    {"$"}
-                    {user.price}
+                    {user.name}
                   </Text>
                   <View
                     style={{
                       flexDirection: "row",
-                      backgroundColor: "#d9d9d9",
-                      height: 50,
-                      width: 100,
+                      width: 180,
+
+                      justifyContent: "space-between",
                     }}
                   >
-                    <AntDesign name={"plus"} size={25} />
-                    <Text>{i}</Text>
-                    <AntDesign name={"plus"} size={25} />
+                    <View>
+                      <Text
+                        style={{
+                          width: "100%",
+                          fontWeight: "bold",
+                          fontSize: 20,
+                        }}
+                      >
+                        {"$"}
+                        {user.price}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: 86,
+                        justifyContent: "space-between",
+                        backgroundColor: "#d9d9d9",
+                        borderRadius: 10,
+                        paddingHorizontal: 10,
+                        paddingVertical: 5,
+                      }}
+                    >
+                      <AntDesign name={"minus"} size={20} onPress={decrement} />
+                      <Text style={{ fontSize: 20 }}>{quantity}</Text>
+                      <AntDesign name={"plus"} size={20} onPress={increment} />
+                    </View>
                   </View>
                 </View>
               </View>
-            </View>
-          ))}
-        </ScrollView>
-      </View>
-      <View
-        style={{
-          width: "100%",
-          borderTopWidth: 1,
-          marginVertical: 10,
-          paddingVertical: 5,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16, fontWeight: "500" }}>Sub Total</Text>
-        <Text style={{ fontWeight: "600", fontSize: 16 }}>{"$"} 2000.00</Text>
-      </View>
-      <TouchableOpacity
-        style={{
-          backgroundColor: "black",
-          justifyContent: "center",
-          alignItems: "center",
-          paddingVertical: 15,
-          borderRadius:10
-        }}
-      >
-        <Text style={{ color: "#fff",fontSize:16,fontWeight:"600" }}>Place Order</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+            ))}
+          </ScrollView>
+        </View>
+        <View
+          style={{
+            width: "100%",
+            borderTopWidth: 1,
+            marginVertical: 10,
+            paddingVertical: 5,
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>Sub Total</Text>
+          <Text style={{ fontWeight: "600", fontSize: 16 }}>{"$"} 2000.00</Text>
+        </View>
+        <TouchableOpacity
+          style={{
+            backgroundColor: "black",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingVertical: 15,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}>
+            Place Order
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </PageWrapperView>
   );
 };
 
@@ -191,6 +201,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#d9d9d9",
     paddingHorizontal: 15,
+    paddingVertical: 15,
   },
   storyView: {
     marginTop: 4,

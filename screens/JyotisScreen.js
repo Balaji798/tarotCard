@@ -15,7 +15,7 @@ const JyotisScreen = () => {
   const [tab,setTab] = useState(false)
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar animated={true} backgroundColor="#d9d9d9" />
       <ScrollView style={{width:"100%",backgroundColor:"transparent"}}
         showsVerticalScrollIndicator ={false}
@@ -25,7 +25,7 @@ const JyotisScreen = () => {
         <MaterialIcons
           name={"arrow-back-ios"}
           size={25}
-          onPress={() => navigation.navigate("Schedule")}
+          onPress={()=>navigation.navigate("Schedule")}
         />
       </View>
       <Text style={{ fontSize: 28, width: "70%" }}>
@@ -320,7 +320,7 @@ const JyotisScreen = () => {
           <Text style={{ color: "#fff", fontSize: 18 }}>Continue</Text>
         </TouchableOpacity>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 

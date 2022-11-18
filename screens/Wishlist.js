@@ -16,6 +16,7 @@ import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState } from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const stories = [
   {
@@ -62,17 +63,13 @@ const stories = [
 
 const Wishlist = () => {
   const navigation = useNavigation();
-  const [bgColor, setBgColor] = useState(false);
 
-  const setBGColor = () => {
-    setBgColor(true);
-  };
+
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#f2f2f2" />
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
       <View
         style={{
-          paddingVertical: 10,
+          paddingVertical: 20,
           flexDirection: "row",
           justifyContent: "space-between",
         }}
@@ -89,9 +86,14 @@ const Wishlist = () => {
             width: "35%",
           }}
         >
-          <AntDesign name={"search1"} size={28} />
-          <Ionicons name={"ios-heart-outline"} size={28} />
-          <MaterialIcons name={"shopping-cart"} size={28} />
+          <AntDesign name={"search1"} size={28} 
+          onPress={() => navigation.navigate("product-search")}/>
+          <Ionicons name={"ios-heart-outline"} size={28} 
+          onPress={()=>navigation.navigate("wish-list")}
+          />
+          <MaterialIcons name={"shopping-cart"} size={28} 
+          onPress={()=>navigation.navigate("cart")}
+          />
         </View>
       </View>
       <Text style={{paddingVertical:10,fontWeight:"bold",fontSize:28}}>Your liked ones</Text>
@@ -150,7 +152,7 @@ const Wishlist = () => {
           </View>
         </ScrollView>
       </View>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 }
 

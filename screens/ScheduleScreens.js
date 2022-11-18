@@ -11,17 +11,22 @@ import { useNavigation } from "@react-navigation/native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import Entypo from "react-native-vector-icons/Entypo";
 import React from "react";
+import PageWrapperView from "../components/PageWrapperView";
 
 const ScheduleScreens = () => {
   const navigation = useNavigation();
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#ecf0f1" />
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{ flex: 1, paddingHorizontal: 16 }}
+      statusBar={{ background: "#d9d9d9" }}
+    >
       <View
         style={{
           flexDirection: "row",
           justifyContent: "space-between",
-          paddingTop: 20,
+          paddingTop: 25,
           paddingBottom: 20,
         }}
       >
@@ -255,7 +260,7 @@ const ScheduleScreens = () => {
           </View>
         </View>
       </View>
-    </SafeAreaView>
+    </PageWrapperView>
   );
 };
 
@@ -265,7 +270,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#d9d9d9",
-    paddingLeft: 15,
-    paddingRight: 15,
+    paddingHorizontal: 15,
+    paddingVertical: 15,
   },
 });

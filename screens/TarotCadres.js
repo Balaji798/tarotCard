@@ -6,22 +6,33 @@ import {
   ScrollView,
   TouchableOpacity,
   StatusBar,
+  Animated
 } from "react-native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 
+
 const TarotCadres = () => {
+  // const animatedValue = React.useRef(new Animated.Value(0)).current
   const navigation = useNavigation();
+
+  // const onPress =()=>{
+  //   Animated.timing(animatedValue,{
+  //     toValue:1,
+  //     duration:3000,
+  //     useNativeDriver:false
+  //   }).start()
+  // }
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#fff" />
-      <MaterialIcons
-        name={"arrow-back-ios"}
-        size={25}
-        style={{ paddingVertical: 10 }}
-        onPress={() => navigation.navigate("Home")}
-      />
+        <MaterialIcons
+          name={"arrow-back-ios"}
+          size={25}
+          style={{ paddingBottom: 10 }}
+          onPress={() => navigation.navigate("Home")}
+        />
       {/* <StatusBar animated={true} backgroundColor="#d9d9d9" /> */}
       <Text style={{ fontSize: 28, fontWeight: "bold" }}>Check your</Text>
       <View style={{ width: "100%", alignItems: "flex-end" }}>
@@ -51,7 +62,7 @@ const TarotCadres = () => {
               height: 150,
               marginVertical: 10,
             }}
-            onPress={() => navigation.navigate("tarot-details")}
+            onPress={() => navigation.navigate("splash-screen")}
           >
             <View
               style={{
@@ -66,7 +77,7 @@ const TarotCadres = () => {
               style={{
                 paddingVertical: 10,
                 paddingLeft: 10,
-                backgroundColor: "black",
+                backgroundColor: "#1e1621",
                 width: "65%",
                 borderTopRightRadius: 10,
                 borderBottomRightRadius: 10,
@@ -196,7 +207,7 @@ const TarotCadres = () => {
           </View>
         </View>
       </ScrollView>
-    </SafeAreaView>
+    </View>
   );
 };
 
