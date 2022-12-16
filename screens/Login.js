@@ -10,23 +10,39 @@ import {
   KeyboardAvoidingView,
   Dimensions,
 } from "react-native";
+import countryTelData from "country-telephone-data";
 import { useNavigation } from "@react-navigation/native";
 import ApiService from "../services/api/ApiService";
 import useConditionWrapper from "../hooks/useConditionWrapper";
 import React, { useState } from "react";
+import PageWrapperView from "../components/PageWrapperView";
+import CountrySelector from "../components/CountrySelector";
 
 const Login = () => {
+  const [data, setData] = useState(countryTelData.allCountries);
+  const [callingCode,setCallingCode] = useState(data[0].dialCode)
+  const [modal,setModal]=useState(false);
+  const [countryCode,setCountryCode]=useState();
   const [phone, setPhone] = useState("");
   const navigation = useNavigation();
 
   const apiWrapper = useConditionWrapper();
 
-  const signup = ()=>{
-      
-  }
-
   return (
-    <View style={styles.container}>
+    <PageWrapperView
+    topSafeArea
+    dark
+    style={{
+      flex: 1,
+      paddingHorizontal: 16,
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingTop: 40,
+      backgroundColor:"#fff",
+      paddingBottom:20
+    }}
+    statusBar={{ background: "#ffffff" }}
+  >
       <Image
         source={require("../assets/kali.png")}
         resizeMode="cover"
@@ -57,7 +73,8 @@ const Login = () => {
             height:52
           }}
         >
-          <View
+          <TouchableOpacity
+          onPress={()=>setModal(!modal)}
             style={{
               borderRightWidth: 1,
               borderColor: "#555555",
@@ -77,9 +94,9 @@ const Login = () => {
                 color: "#555555",
               }}
             >
-              +91
+              +{callingCode}
             </Text>
-          </View>
+          </TouchableOpacity>
           <TextInput
             placeholder="Phone Number"
             style={{ flex: 1, paddingLeft: 5, fontSize: 16 }}
@@ -99,19 +116,16 @@ const Login = () => {
           paddingTop: 10,
           paddingBottom: 10,
         }}
-        onPress={() => {
-          navigation.navigate("Verification");
-        }}
-        // onPress={async () =>
-        //   apiWrapper(async () => {
-        //     console.log("hi");
-        //     await ApiService.sendLoginOTP(phone);
-        //     navigation.navigate("Verification");
-        //   })}
+        onPress={async () =>
+          apiWrapper(async () => {
+            await ApiService.sendLoginOTP(phone,callingCode);
+            navigation.navigate("Verification",{phone:phone});
+          })}
       >
         <Text style={{ color: "#fff", fontSize: 18 }}>Continue</Text>
       </TouchableOpacity>
-    </View>
+      <CountrySelector data={data} modal={modal} setModal={setModal} setCallingCode={setCallingCode}/>
+    </PageWrapperView>
   );
 };
 

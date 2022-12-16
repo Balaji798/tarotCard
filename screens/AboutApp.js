@@ -7,7 +7,17 @@ import PageWrapperView from "../components/PageWrapperView";
 const AboutApp = () => {
   const navigation = useNavigation();
   return (
-    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{
+        flex: 1,
+        paddingHorizontal: 16,
+        justifyContent: "space-between",
+        backgroundColor:"#fff"
+      }}
+      statusBar={{ background: "#ffffff" }}
+    >
       <Octicons
         name="arrow-left"
         size={25}
@@ -15,36 +25,45 @@ const AboutApp = () => {
         onPress={() => navigation.navigate("Profile")}
       />
       <ScrollView>
-        <Text style={{ fontSize: 26, fontWeight: "bold",paddingBottom:10}}>About Tarot</Text>
-        <View style={{width:"100%",height:200,alignItems:"center",justifyContent:"center"}}>
-            <View style={{width:200,height:"100%",backgroundColor:"#d5d5d5"}}>
-
-            </View>
+        <Text style={{ fontSize: 26, fontWeight: "bold", paddingBottom: 10 }}>
+          About Tarot
+        </Text>
+        <View
+          style={{
+            width: "100%",
+            height: 200,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <View
+            style={{ width: 200, height: "100%", backgroundColor: "#d5d5d5" }}
+          ></View>
         </View>
-        <Text style={{paddingVertical:10,lineHeight:20,fontSize:14}}>
+        <Text style={{ paddingVertical: 10, lineHeight: 20, fontSize: 14 }}>
           Nesto Hypermarkets bring you one-step closer to our shelves through
           this Customer Care program that is intended to sut the mood and
           purchase patterns of each one of you
         </Text>
-        <Text style={{paddingVertical:10,lineHeight:20}}>
+        <Text style={{ paddingVertical: 10, lineHeight: 20 }}>
           INAAM is a loyalty Program specially designed to aid the Purchasing
           habits of our loyal customers extending our service to a family
           audience by giving them an opportunity to shop more at much less
           through this innovative program
         </Text>
-        <Text style={{paddingVertical:10,lineHeight:20}}>
+        <Text style={{ paddingVertical: 10, lineHeight: 20 }}>
           Would earn substantial savings to the vast number of customers who
           consider NESTO as their second home. Currently operating in the
           countries of UAE,KSA, Bahrain, Oman, Qatar, Kuwait, and India the
           NESTO footprint is soon expected to expand into other markets in Asia
         </Text>
-        <Text style={{paddingVertical:10,lineHeight:20}}>
+        <Text style={{ paddingVertical: 10, lineHeight: 20 }}>
           Would earn substantial savings to the vast number of customers who
           consider NESTO as their second home. Currently operating in the
           countries of UAE,KSA, Bahrain, Oman, Qatar, Kuwait, and India the
           NESTO footprint is soon expected to expand into other markets in Asia
         </Text>
-        <Text style={{paddingVertical:10,lineHeight:20}}>
+        <Text style={{ paddingVertical: 10, lineHeight: 20 }}>
           Would earn substantial savings to the vast number of customers who
           consider NESTO as their second home. Currently operating in the
           countries of UAE,KSA, Bahrain, Oman, Qatar, Kuwait, and India the
@@ -61,7 +80,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    paddingTop:25,
+    paddingTop: 25,
     paddingHorizontal: 15,
   },
 });

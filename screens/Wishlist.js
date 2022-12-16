@@ -134,6 +134,7 @@ const Wishlist = () => {
                     paddingVertical: 5,
                     fontWeight: "bold",
                     fontSize: 16,
+                    paddingTop:12
                   }}
                 >
                   {user.name}
@@ -179,7 +180,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   storyUserImage2: {
-    height: 210,
+    height: 276,
     width: "100%",
     borderRadius: 10,
     marginHorizontal: 10,

@@ -13,11 +13,22 @@ import EvilIcons from "react-native-vector-icons/EvilIcons";
 import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import PageWrapperView from "../components/PageWrapperView";
+import Input from "../components/Input";
 
 const ContactToApp = () => {
   const navigation = useNavigation();
   return (
-    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{
+        flex: 1,
+        paddingHorizontal: 15,
+        justifyContent: "space-between",
+        backgroundColor: "#fff",
+      }}
+      statusBar={{ background: "#ffffff" }}
+    >
       <Octicons
         name="arrow-left"
         size={25}
@@ -129,6 +140,8 @@ const ContactToApp = () => {
           Your Email <Text style={{ color: "red" }}>*</Text>
         </Text>
         <TextInput
+          required
+          title="Your mail"
           placeholder="Email"
           style={{
             paddingLeft: 15,
@@ -140,21 +153,15 @@ const ContactToApp = () => {
           }}
           onChangeText={() => {}}
         />
-        <Text style={{ color: "grey", paddingTop: 20, paddingBottom: 5 }}>
-          Your Message <Text style={{ color: "red" }}>*</Text>
-        </Text>
-        <TextInput
-          multiline={true}
-          numberOfLines={10}
-          style={{
-            paddingLeft: 15,
-            fontSize: 16,
-            borderWidth: 1.3,
-            borderColor: "#d3d3d3",
-            paddingVertical: 0,
-            borderRadius: 10,
-          }}
+        <Input
+          required
+          placeholder="Enter Your Message"
+          title="Your Message"
+          textArea
+          maxLength={255}
+          //value={data.message}
           onChangeText={() => {}}
+          style={{ marginBottom: 30 }}
         />
         <View
           style={{

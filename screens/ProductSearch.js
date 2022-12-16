@@ -102,7 +102,7 @@ const ProductSearch = () => {
           ))}
         </ScrollView>
       </View>
-      <Text style={{ padding: 15, fontWeight: "bold", fontSize: 18 }}>
+      <Text style={{ padding: 15, fontWeight: "bold", fontSize: 18,paddingTop:48 }}>
         ITEMS VIEWED
       </Text>
       <View style={styles.storyView}>
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   },
   storyView: {
     paddingVertical: 4,
-    marginTop: 4,
+    marginTop: 20,
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

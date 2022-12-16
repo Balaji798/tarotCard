@@ -16,7 +16,7 @@ const Videos = () => {
   const [tab, setTab] = useState(false);
   const navigation = useNavigation();
   return (
-    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15 }} statusBar={{ background: '#d9d9d9' }}>
+    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:16,backgroundColor:"#ffff" }} statusBar={{ background: '#d9d9d9' }}>
       <MaterialIcons
         name={"arrow-back-ios"}
         size={25}

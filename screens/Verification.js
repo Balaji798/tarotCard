@@ -19,6 +19,8 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import useConditionWrapper from "../hooks/useConditionWrapper";
 import PageWrapperView from "../components/PageWrapperView";
 import ResendOTP from "../components/ResendOTP";
+import ApiService from "../services/api/ApiService";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 const windowWidth = Dimensions.get("window").width;
 
 const OTPValidator = (otp) => {
@@ -26,28 +28,22 @@ const OTPValidator = (otp) => {
   return regex.test(otp);
 };
 
-const Verification = () => {
+const Verification = (props) => {
   const [OTP, setOTP] = useState();
-  // const { countryConfig, auth } = useSelector((state) => state);
-  // const insets = useSafeAreaInsets();
+  const phone = props.route.params.phone;
+  const apiWrapper = useConditionWrapper();
 
-  // const dispatch = useDispatch();
-  // const keyBoardState = useKeyboard();
-
-  // const apiWrapper = useConditionWrapper();
-
-  // const authenticate = () =>
-  //   apiWrapper(async () => {
-  //     const { data } = await ApiService.customerLogin(
-  //       auth.user.number,
-  //       OTP,
-  //       countryConfig.country_code
-  //     );
-  //     await AsyncStorage.setItem("token", data.token);
-  //     authSuccessful(dispatch, data);
-  //     return;
-  //   });
   const navigation = useNavigation();
+
+  const authenticate = () =>
+  
+    apiWrapper(async () => {
+      
+      const { data } = await ApiService.customerLogin(phone, OTP);
+       await AsyncStorage.setItem("token", data.token);
+       data.data.firstName ===""? navigation.push("edit-profile"):(navigation.push("Tabs"))
+      return;
+    });
   return (
     <PageWrapperView
       topSafeArea
@@ -58,6 +54,7 @@ const Verification = () => {
         alignItems: "center",
         justifyContent: "space-between",
         paddingTop: 40,
+        backgroundColor: "#fff",
       }}
       statusBar={{ background: "#ffffff" }}
     >
@@ -74,7 +71,11 @@ const Verification = () => {
         enabled
       >
         <SafeAreaView
-          style={{ height: "60%", justifyContent: "space-between",paddingTop:40 }}
+          style={{
+            height: "60%",
+            justifyContent: "space-between",
+            paddingTop: 40,
+          }}
         >
           <Text style={{ fontWeight: "bold", fontSize: 20, paddingBottom: 10 }}>
             Enter Your Code
@@ -122,29 +123,36 @@ const Verification = () => {
                 Please enter a valid OTP
               </Text>
             ))}
-            <View style={{ alignItems:'center',justifyContent:"center",height:70 }}>
+          <View
+            style={{
+              alignItems: "center",
+              justifyContent: "center",
+              height: 70,
+            }}
+          >
             {/* <Text style={{ fontWeight: "bold", fontSize: 16 }}>
               Resend Code
             </Text> */}
-            <ResendOTP/>
-            </View>
-            <TouchableOpacity
-              style={{
-                color: "#fff",
-                backgroundColor: "black",
-                width: "100%",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-around",
-                borderRadius: 10,
-                paddingTop: 10,
-                paddingBottom: 10,
-                width: "100%",
-              }}
-              onPress={() => navigation.navigate("Tabs")}
-            >
-              <Text style={{ color: "#fff", fontSize: 18 }}>Continue</Text>
-            </TouchableOpacity>
+            <ResendOTP />
+          </View>
+          <TouchableOpacity
+            style={{
+              color: "#fff",
+              backgroundColor: "black",
+              width: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-around",
+              borderRadius: 10,
+              paddingTop: 10,
+              paddingBottom: 10,
+              width: "100%",
+            }}
+            // onPress={() => navigation.navigate("Tabs")}
+            onPress={authenticate}
+          >
+            <Text style={{ color: "#fff", fontSize: 18 }}>Continue</Text>
+          </TouchableOpacity>
         </SafeAreaView>
       </KeyboardAvoidingView>
     </PageWrapperView>

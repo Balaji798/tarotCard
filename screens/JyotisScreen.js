@@ -5,304 +5,126 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
-  TouchableOpacity
+  TouchableOpacity,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
-import React,{useState} from "react";
+import React, { useState } from "react";
+import useApi from "../hooks/useApi";
+import ApiService from "../services/api/ApiService";
+import useConditionWrapper from "../hooks/useConditionWrapper";
 
 const JyotisScreen = () => {
-  const [tab,setTab] = useState(false)
+  const [tab, setTab] = useState(false);
+  const [id,setId]=useState("");
+
+  const apiWrapper = useConditionWrapper();
+
+  const {
+    firstLoad,
+    loading,
+    data: jyotis,
+    reload,
+  } = useApi(
+    async () =>
+      apiWrapper(async () => {
+        const res = await ApiService.fetchJyotis();
+        const jyotis = res.data;
+        return jyotis;
+      }),
+    []
+  );
+
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <StatusBar animated={true} backgroundColor="#d9d9d9" />
-      <ScrollView style={{width:"100%",backgroundColor:"transparent"}}
-        showsVerticalScrollIndicator ={false}
+      <ScrollView
+        style={{ width: "100%", backgroundColor: "transparent" }}
+        showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
-        >
-      <View style={{ paddingVertical: 10 }}>
-        <MaterialIcons
-          name={"arrow-back-ios"}
-          size={25}
-          onPress={()=>navigation.navigate("Schedule")}
-        />
-      </View>
-      <Text style={{ fontSize: 28, width: "70%" }}>
-        <Text style={{ fontWeight: "bold" }}>Who</Text> do you want to meet?
-      </Text>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          flexWrap: "wrap",
-        }}
       >
+        <View style={{ paddingVertical: 10 }}>
+          <MaterialIcons
+            name={"arrow-back-ios"}
+            size={25}
+            onPress={() => navigation.navigate("Schedule")}
+          />
+        </View>
+        <Text style={{ fontSize: 28, width: "70%" }}>
+          <Text style={{ fontWeight: "bold" }}>Who</Text> do you want to meet?
+        </Text>
         <View
           style={{
-            backgroundColor: tab ?"#fff":"black",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
+            flexDirection: "row",
             justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
-          }}
-          onPress={()=>{setTab((i)=>!i)}}
-        >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-            }}
-          ></View>
-          <View>
-            <Text
-              style={{
-                fontSize: 16,
-                fontWeight: "bold",
-                fontSize: 16,
-                textAlign: "center",
-                color:"#fff"
-              }}
-            >
-              Jyotish Name
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-                color:"#fff"
-              }}
-            >
-              Jyotish Name
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#fff",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
-            justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
+            flexWrap: "wrap",
           }}
         >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-            }}
-          ></View>
-          <View>
-            <Text style={{ fontSize: 16, fontWeight: "bold", fontSize: 16 }}>
-              Jyotish Name
-            </Text>
-            <Text
+          {jyotis.map((item, index) => (
+            <TouchableOpacity
               style={{
-                textAlign: "center",
-                fontSize: 12,
+                backgroundColor: id===item._id ? "black" : "#fff",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingVertical: 15,
+                paddingHorizontal: 10,
+                borderRadius: 10,
+                justifyContent: "space-between",
+                height: 150,
+                width: "47%",
+                marginTop: 20,
+              }}
+              onPress={() => {
+                setId(item._id);
               }}
             >
-              Jyotish Name
-            </Text>
-          </View>
+              <View
+                style={{
+                  height: 50,
+                  backgroundColor: "#d5d5d5",
+                  width: 50,
+                  borderRadius: 30,
+                }}
+              >
+                <Image
+                  source={{ uri: item.image }}
+                  style={{
+                    height: 50,
+                    width: 50,
+                    borderRadius: 30,
+                  }}
+                  resizeMode="cover"
+                />
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontSize: 16,
+                    fontWeight: "bold",
+                    fontSize: 16,
+                    textAlign: "center",
+                    color: id===item._id ? "#fff" : "black",
+                  }}
+                >
+                  {item.firstName} {item.lastName}
+                </Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 12,
+                    color: id===item._id ? "#fff" : "black",
+                  }}
+                >
+                  Jyotish Name
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ))}
+          <Image />
         </View>
-        <View
-          style={{
-            backgroundColor: "#fff",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
-            justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
-          }}
-        >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-            }}
-          ></View>
-          <View>
-            <Text style={{ fontSize: 16, fontWeight: "bold", fontSize: 16 }}>
-              Jyotish Name
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-              }}
-            >
-              Jyotish Name
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#fff",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
-            justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
-          }}
-        >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-            }}
-          ></View>
-          <View>
-            <Text style={{ fontSize: 16, fontWeight: "bold", fontSize: 16 }}>
-              Jyotish Name
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-              }}
-            >
-              Jyotish Name
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#fff",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
-            justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
-          }}
-        >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-            }}
-          ></View>
-          <View>
-            <Text style={{ fontSize: 16, fontWeight: "bold", fontSize: 16 }}>
-              Jyotish Name
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-              }}
-            >
-              Jyotish Name
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#fff",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
-            justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
-          }}
-        >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-            }}
-          ></View>
-          <View>
-            <Text style={{ fontSize: 16, fontWeight: "bold", fontSize: 16 }}>
-              Jyotish Name
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-              }}
-            >
-              Jyotish Name
-            </Text>
-          </View>
-        </View>
-        <View
-          style={{
-            backgroundColor: "#fff",
-            alignItems: "center",
-            justifyContent: "center",
-            paddingVertical: 15,
-            paddingHorizontal: 10,
-            borderRadius: 10,
-            justifyContent: "space-between",
-            height: 150,
-            width: "47%",
-            marginTop: 20,
-          }}
-        >
-          <View
-            style={{
-              height: 50,
-              backgroundColor: "#d5d5d5",
-              width: 50,
-              borderRadius: 30,
-
-            }}
-          ></View>
-          <View>
-            <Text style={{ fontSize: 16, fontWeight: "bold", fontSize: 16 }}>
-              Jyotish Name
-            </Text>
-            <Text
-              style={{
-                textAlign: "center",
-                fontSize: 12,
-              }}
-            >
-              Jyotish Name
-            </Text>
-          </View>
-        </View>
-      </View>
-      <TouchableOpacity
+        <TouchableOpacity
           style={{
             color: "#fff",
             backgroundColor: "black",
@@ -313,9 +135,9 @@ const JyotisScreen = () => {
             borderRadius: 10,
             paddingTop: 10,
             paddingBottom: 10,
-            marginVertical:10
+            marginVertical: 10,
           }}
-          onPress={() => navigation.navigate("schedule-jyotis")}
+          onPress={() => navigation.navigate("schedule-jyotis",{ id: id })}
         >
           <Text style={{ color: "#fff", fontSize: 18 }}>Continue</Text>
         </TouchableOpacity>

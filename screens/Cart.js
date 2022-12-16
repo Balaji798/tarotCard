@@ -66,8 +66,17 @@ const Cart = () => {
     setBgColor(true);
   };
   return (
-    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
-      <ScrollView 
+    <PageWrapperView
+      topSafeArea
+      dark
+      style={{
+        flex: 1,
+        paddingHorizontal: 15,
+        justifyContent: "space-between",
+      }}
+      statusBar={{ background: "#ffffff" }}
+    >
+      <ScrollView
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
       >
@@ -205,7 +214,7 @@ const styles = StyleSheet.create({
   },
   storyView: {
     marginTop: 4,
-    height: 430,
+    height: "80%",
     display: "flex",
     flexDirection: "row",
     alignItems: "center",

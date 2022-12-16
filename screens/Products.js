@@ -68,7 +68,7 @@ const Products = () => {
     <PageWrapperView
       topSafeArea
       dark
-      style={{ flex: 1, paddingHorizontal: 16 }}
+      style={{ flex: 1, paddingHorizontal: 16,paddingBottom:200 }}
       statusBar={{ background: "#d9d9d9" }}
     >
       <View
@@ -268,8 +268,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   storyUserImage2: {
-    height: 210,
-    width: "100%",
+    height: 276,
+    width: 168,
     borderRadius: 10,
     marginHorizontal: 10,
     resizeMode: "cover",

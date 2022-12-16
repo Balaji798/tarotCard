@@ -16,6 +16,10 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import React, { useState } from "react";
 import Carousel from "../components/Carousel";
 import PageWrapperView from "../components/PageWrapperView";
+import useConditionWrapper from "../hooks/useConditionWrapper";
+import useApi from "../hooks/useApi";
+import ApiService from "../services/api/ApiService";
+import OnBoardingCarousel from "../components/OnBoardingCarousel";
 
 const { width } = Dimensions.get("window");
 const height = (width * 100) / 30;
@@ -48,7 +52,7 @@ const HEIGHT = Dimensions.get("window").height;
 
 const ShopScreens = () => {
   const [wish, setWish] = useState(false);
-  const [ind, setInd] = useState([]);
+  const [ind, setInd] = useState(-0);
   const navigation = useNavigation();
   const [pagination, setPagination] = useState(0);
 
@@ -64,14 +68,32 @@ const ShopScreens = () => {
   const setWishI = (i) => {
     setInd(i);
     setWish((p) => !p);
-    console.log(ind[i]);
+    console.log(i);
   };
 
+  const apiWrapper = useConditionWrapper();
+
+  const {
+    firstLoad,
+    loading,
+    data: products,
+    reload,
+  } = useApi(
+    async () =>
+      apiWrapper(async () => {
+        const res = await ApiService.getProduct();
+        const products = res.data;
+        return products;
+      }),
+    []
+  );
+
+  console.log(products);
   return (
     <PageWrapperView
       topSafeArea
       dark
-      style={{ paddingHorizontal: 16, paddingBottom: 50 }}
+      style={{ paddingBottom: 50, paddingHorizontal: 16 }}
       statusBar={{ background: "#d9d9d9" }}
     >
       <View
@@ -108,32 +130,24 @@ const ShopScreens = () => {
           />
         </View>
       </View>
-      <ScrollView scrollEventThrottle={16} showsVerticalScrollIndicator={false} style={{borderRadius: 10,}}>
+      <ScrollView
+        scrollEventThrottle={16}
+        showsVerticalScrollIndicator={false}
+        style={{ borderRadius: 10 }}
+      >
+        <View
+          style={{
+            borderRadius: 10,
+            width: "100%",
+            height: 250,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <OnBoardingCarousel />
+        </View>
         {/* <Carousel data={stories} /> */}
-        <View style={{borderRadius: 10,}}>
-          <ScrollView
-            horizontal
-            pagingEnabled
-            onScroll={chang}
-            showsHorizontalScrollIndicator={false}
-            style={{ width, height: 250,borderRadius: 10, }}
-            scrollEventThrottle={17}
-          >
-            {stories.map((image, index) => (
-              <View style={{ width,borderRadius: 10,  }} key={index}>
-                <Image
-                  key={index}
-                  source={{ uri: image.img }}
-                  style={{
-                    width,
-                    height: 250,
-                    resizeMode: "cover",
-                    borderRadius: 10,
-                  }}
-                />
-              </View>
-            ))}
-          </ScrollView>
+        {/* <View style={{ borderRadius: 10 }}>
           <View
             style={{
               flexDirection: "row",
@@ -163,20 +177,19 @@ const ShopScreens = () => {
               ))}
             </View>
           </View>
-        </View>
+        </View> */}
         <View
           style={[
             styles.storyView,
             {
               paddingVertical: 10,
-             
             },
           ]}
         >
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
             {stories.map((user, i) => (
               <TouchableOpacity
-                style={styles.storyHolder}
+                style={[styles.storyHolder]}
                 onPress={() => navigation.navigate("products")}
                 key={i}
               >
@@ -193,7 +206,12 @@ const ShopScreens = () => {
         </View>
 
         <Text
-          style={{ paddingHorizontal: 15, fontWeight: "bold", fontSize: 18 }}
+          style={{
+            paddingTop: 53,
+            fontWeight: "bold",
+            fontSize: 18,
+            paddingBottom: 10,
+          }}
         >
           New Arrival
         </Text>
@@ -202,18 +220,26 @@ const ShopScreens = () => {
             styles.storyView,
             {
               marginBottom: 50,
-             
             },
           ]}
         >
           <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            {stories.map((user, index) => (
-              <View style={styles.storyHolder} key={index}>
+            {products.map((product, index) => (
+              <TouchableOpacity
+                style={[
+                  styles.storyHolder,
+                  { width: 128, marginHorizontal: 8, marginLeft: 16 },
+                ]}
+                key={index}
+                onPress={() =>
+                  navigation.push("product-details", { product: product })
+                }
+              >
                 <View
                   style={{
                     position: "absolute",
                     top: 5,
-                    right: 15,
+                    right: 20,
                     bottom: 0,
                     overflow: "hidden",
                     zIndex: 1,
@@ -225,7 +251,7 @@ const ShopScreens = () => {
                     borderRadius: 30,
                   }}
                 >
-                  {ind[index] === index ? (
+                  {ind === index && wish ? (
                     <AntDesign
                       name={"heart"}
                       size={20}
@@ -243,10 +269,12 @@ const ShopScreens = () => {
                 <Image
                   style={[styles.storyUserImage2]}
                   source={{
-                    uri: user.img,
+                    uri: product.images[0],
                   }}
                 />
-              </View>
+                <Text>{product.category}</Text>
+                <Text>{product.price}</Text>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
@@ -277,7 +305,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   storyHolder: {
-    paddingHorizontal: 10,
+    paddingRight: 28,
     alignItems: "center",
   },
   storyUserImage: {

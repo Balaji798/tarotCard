@@ -1,159 +1,84 @@
-import { StyleSheet, Text, View, SafeAreaView, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  TextInput,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
 import Octicons from "react-native-vector-icons/Octicons";
 import EvilIcons from "react-native-vector-icons/EvilIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Feather from "react-native-vector-icons/Feather";
+import { MyText } from "../components/MyDesign";
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useState } from "react";
+import useTimeout from "../hooks/useTimeout";
 import PageWrapperView from "../components/PageWrapperView";
+import { FAQs } from "../data/FAQs";
+import Input from "../components/Input";
+import Expandable from "../components/Expandable";
 
 const FAQ = () => {
+  const [searchQuery, setSearchQuery] = useState("");
   const navigation = useNavigation();
   return (
-    <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
-      <Octicons
-        name="arrow-left"
-        size={25}
-        style={{ paddingVertical: 10 }}
-        onPress={() => navigation.navigate("Profile")}
-      />
-      <Text style={{ fontSize: 24, fontWeight: "bold", paddingBottom: 10 }}>
-        Frequently Asked Questions
-      </Text>
-      <Text style={{ paddingRight: 15 }}>
-        We're here to help you with anything and everything on Tarot App
-      </Text>
-      <View
-        style={{
-          marginTop: 15,
-          marginBottom: 15,
-          borderWidth: 1.3,
-          borderColor: "#d3d3d3",
-          paddingHorizontal: 5,
-          borderRadius: 10,
-          flexDirection: "row",
-        }}
+    // <PageWrapperView topSafeArea dark style={{ flex: 1,paddingHorizontal:15, justifyContent: "space-between", }} statusBar={{ background: '#ffffff' }}>
+    <PageWrapperView withBack topSafeArea dark style={{backgroundColor:"#fff"}} statusBar={{ background: '#ffffff' }}>
+      <KeyboardAvoidingView
+        enabled
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : ""}
       >
-        <EvilIcons
-          name="search"
-          size={25}
-          style={{ paddingVertical: 10, color: "grey" }}
-          onPress={() => navigation.navigate("Profile")}
-        />
-        <TextInput
-          placeholder="Search for help"
-          style={{ fontSize: 16 }}
-          onChangeText={() => {}}
-        />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>What is Tarot App</Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>How do i get my Tarot App</Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>How do i Register</Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16, width: "90%" }}>
-          is there a minimum sped amount or a joining fee to become an inaam
-          member?
-        </Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16, width: "90%" }}>
-          If i shop for less than Rs.100, am i eligible to earn points?
-        </Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>
-          How Safe is my personal information
-        </Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16, width: "90%" }}>
-          My membership information has changed. How do i update my profile
-        </Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
-      <View
-        style={{
-          borderBottomWidth: 1,
-          borderBottomColor: "#d5d5d5",
-          paddingVertical: 10,
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}
-      >
-        <Text style={{ fontSize: 16 }}>
-          Will my tarot membership ever become inactive?
-        </Text>
-        <Feather name={"plus"} size={25} color={"grey"} />
-      </View>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{ flex: 1, paddingHorizontal: 16 }}
+        >
+          <Octicons
+            name="arrow-left"
+            size={25}
+            style={{ paddingVertical: 10 }}
+            onPress={() => navigation.navigate("Profile")}
+          />
+          <MyText style={{ fontSize: "xl", lineHeight: 36 }} bold>
+            Frequently Asked Questions
+          </MyText>
+          <MyText
+            style={{
+              fontSize: "md",
+              paddingTop: 4,
+              color: "#6B6D73",
+              lineHeight: 22,
+            }}
+          >
+            We’re here to help you with anything and everything on INAAM.
+          </MyText>
+          <Input
+            placeholder="Search for help"
+            style={{ marginTop: 16 }}
+            onChangeText={(text) => {
+              setSearchQuery(text);
+            }}
+            value={searchQuery}
+            noBorderColorChange
+            prefixIcon={<EvilIcons name="search" size={25} color="#747474" />}
+          />
+          <View style={{ marginTop: 30 }}>
+            {FAQs?.filter((faq) =>
+              faq.question.toLowerCase().includes(searchQuery.toLowerCase())
+            )?.map((item, index) => (
+              <Expandable
+                key={index}
+                ques={item?.question}
+                ans={item?.answer}
+              />
+            ))}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </PageWrapperView>
+    //</PageWrapperView>
   );
 };
 
@@ -163,7 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#ffffff",
-    paddingTop:25,
+    paddingTop: 25,
     paddingHorizontal: 15,
   },
 });

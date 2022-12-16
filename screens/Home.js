@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import React, { useState, useEffect } from "react";
 import { setStatusBarStyle } from "expo-status-bar";
@@ -21,6 +22,7 @@ import ApiService from "../services/api/ApiService";
 // import useConditionWrapper from "../hooks/useConditionWrapper";
 import useApi from "../hooks/useApi";
 import PageWrapperView from "../components/PageWrapperView";
+import useConditionWrapper from "../hooks/useConditionWrapper";
 
 //const inProduction = manifest.packagerOpts == null;
 // const inProduction = process.env.NODE_ENV === 'production';
@@ -68,31 +70,15 @@ const Home = () => {
     }, 200);
   };
 
-	// const apiWrapper = useConditionWrapper();
+  const getToken = async () => {
+    const token = await AsyncStorage.getItem("token");
+    return { token };
+  };
 
-	// const {
-	// 	firstLoad,
-	// 	loading,
-	// 	data: products,
-	// 	reload,
-	// } = useApi(
-	// 	async () =>
-	// 		apiWrapper(async () => {
-	// 			const res = await ApiService.getProduct();
-	// 			const products = res.data
-	// 			return products;
-	// 		}), [],
-	// );
+const token =  getToken();  
 
-	// onfocus reload
-	// const isFocused = useIsFocused();
-	// useEffect(() => {
-	// 	reload();
-	// }, [isFocused]);
+console.log(token)
 
-
-
-//  console.log(products)
   return (
     <PageWrapperView topSafeArea  style={{ flex: 1 }} statusBar={{ background: '#1e1621' }}>
       <ScrollView style={{ width: "100%", backgroundColor: "transparent" }}>
@@ -196,7 +182,7 @@ const Home = () => {
               {
                 paddingVertical: 10,
                 
-                
+                paddingRight:140
               },
             ]}
           >

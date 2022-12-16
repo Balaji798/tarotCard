@@ -1,8 +1,8 @@
 import { useState,useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import Login from "./screens/Login";
 import AppFeedback from "./screens/AppFeedback";
@@ -24,11 +24,8 @@ import ProductDetails from "./screens/ProductDetails";
 import ProductSearch from "./screens/ProductSearch";
 import Wishlist from "./screens/Wishlist";
 import Cart from "./screens/Cart";
-import SplashScreen from "./screens/SplashScreen";
 
 const Stack = createStackNavigator();
-
-const Tab = createBottomTabNavigator();
 
 const theme = {
   ...DefaultTheme,
@@ -38,43 +35,25 @@ const theme = {
   },
 };
 
-const STYLES = ["default", "dark-content", "light-content"];
-const TRANSITIONS = ["fade", "slide", "none"];
+const App=()=> {
+    const [token,setToken] = useState("");
+  const getToken = async () => {
+    const token = await AsyncStorage.getItem("token");
+     setToken({token});
+    return { token };
+ };
 
-export default function App() {
-  const [jyotisData,setJyotisData] = useState([]);
-  const [error,setError] = useState("");
+  useEffect(()=>{
+    getToken()
+  },[])
 
-  useEffect(() => {
-    getJyotis();
-  }, []);
 
-  const newData = [];
-
-  const getJyotis = async()=>{
-    try {
-      const url = "http://localhost:8080/product/get_products";
-      const res = await axios.get(url);
-      newData.push(res.data);
-      console.log(jyotisData)
-    } catch (error) {
-      if (
-        error.response &&
-        error.response.status >= 400 &&
-        error.response.status <= 500
-      ) {
-        setError(error.response.data.message);
-      }
-    }
-  }
-
-  console.log(newData)
-
+  console.log(token.token)
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName="splash-screen"
+        initialRouteName= {token.token === "" ?  "Login":"Tabs"}
       >
         <Stack.Screen
           name="Tabs"
@@ -102,10 +81,10 @@ export default function App() {
         <Stack.Screen name="product-search" component={ProductSearch} />
         <Stack.Screen name="wish-list" component={Wishlist} />
         <Stack.Screen name="cart" component={Cart}/>
-        <Stack.Screen name="splash-screen" component={SplashScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
 
 //
+export default App;
